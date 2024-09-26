@@ -21,6 +21,7 @@ export class SyncComponent {
   syncData: any[] = [];
   meiliData: any[] = [];
   sourceData: any[] = [];
+  editmelie: FormGroup;
 
   currentPage = 1;
   totalPages = 1;
@@ -37,7 +38,14 @@ export class SyncComponent {
     private _AsynService: AsynService,
     private _MeilisearchService: MeilisearchService,
     private _SourceService: SourceService
-  ) {}
+  ) {
+    this.editmelie = new FormGroup({
+      id: new FormControl(''),
+      label: new FormControl('', Validators.required),
+      sourceId: new FormControl('', Validators.required),
+      meiliSearchId: new FormControl('', Validators.required),
+    });
+  }
 
   ngOnInit(): void {
     this.getData(this.currentPage);
@@ -98,6 +106,37 @@ export class SyncComponent {
 
   // Initialize form for editing
 
+  editMelie(id: string) {
+    this.callGet()
+    this._AsynService.getSyncById(id).subscribe({
+      next: (res) => {
+        this.editmelie = new FormGroup({
+          id: new FormControl(res.result.id),
+          label: new FormControl(res.result.label, Validators.required),
+          sourceId: new FormControl(res.result.source.id, Validators.required),
+          meiliSearchId: new FormControl(res.result.meiliSearch.id, Validators.required),
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching data for edit:', err);
+      },
+    });
+  }
+
+  // Update product details
+  updateMelie(): void {
+    if (this.editmelie.valid) {
+      this._AsynService.updateSync(this.editmelie.value).subscribe({
+        next: (res) => {
+          this.getData(this.currentPage); // Refresh data
+        },
+        error: (err) => {
+          console.error('Error updating item:', err);
+        },
+      });
+    }
+  }
+
   // Handle form submission to add a new MeiliSearch instance
   addMeili() {
     if (this.syncForm.valid) {
@@ -106,7 +145,7 @@ export class SyncComponent {
       this._AsynService.addSync(formData).subscribe({
         next: (res) => {
           console.log('MeiliSearch added successfully:', res);
-          this.getData(); 
+          this.getData();
           this.closeModal();
         },
         error: (err) => {
