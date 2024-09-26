@@ -129,6 +129,7 @@ export class SyncComponent {
       this._AsynService.updateSync(this.editmelie.value).subscribe({
         next: (res) => {
           this.getData(this.currentPage); // Refresh data
+          this.closeModal('#exampleModal2')
         },
         error: (err) => {
           console.error('Error updating item:', err);
@@ -146,7 +147,7 @@ export class SyncComponent {
         next: (res) => {
           console.log('MeiliSearch added successfully:', res);
           this.getData();
-          this.closeModal();
+          this.closeModal('#exampleModal');
         },
         error: (err) => {
           console.error('Error adding MeiliSearch:', err);
@@ -187,8 +188,8 @@ export class SyncComponent {
   }
 
   // Close the modal
-  closeModal() {
-    const modalElement = document.querySelector('#exampleModal');
+  closeModal(id:string) {
+    const modalElement = document.querySelector(id);
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
   }
