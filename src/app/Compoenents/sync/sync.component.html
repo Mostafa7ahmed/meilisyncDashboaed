@@ -16,25 +16,25 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Label</th>
-                    <th>API Key</th>
-                    <th>URL</th>
+                    <th>Label Sync</th>
                     <th>Created On</th>
-                    <th>Action</th>
+                    <th>Label Source</th>
+                    <th>Label Meilisync</th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of meiliData; let i = index">
+                <tr *ngFor="let item of syncData; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.label }}</td>
-                    <td>{{ item.apiKey }}</td>
-                    <td>{{ item.url }}</td>
+                    <td>{{ item.meiliSearch.label }}</td>
+                    <td>{{ item.source.label  }}</td>
                     <td>{{ item.createdOn | date: 'yyyy-MM-dd' }}</td>
                     <td>
                         <button class="btn" >
                             <i class="fa-solid fa-pen-to-square mx-5"></i>
                         </button>
-                        <button class="btn" (click)="deleteMeili(item.id)">
+                        <button class="btn" (click)="deleteaync(item.id)">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -68,7 +68,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form (ngSubmit)="addMeili(meilForm)" [formGroup]="meilForm">
+                <form>
                     <div class="mb-3">
                         <label for="label" class="col-form-label">Label</label>
                         <input type="text" class="form-control" formControlName="label" placeholder="Enter label" id="label">
