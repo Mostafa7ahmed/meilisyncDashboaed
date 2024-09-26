@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalAPiService {
 
 
-  baseUrl: string = 'http://meilisync.runasp.net/meilisync/api/v1';
+  baseUrl: string = 'https://meilisync.runasp.net/meilisync/api/v1';
   meilisearchRoute: string = '/meilisearch';
   syncRoute: string = '/sync';
   sourceRoute: string = '/source';
