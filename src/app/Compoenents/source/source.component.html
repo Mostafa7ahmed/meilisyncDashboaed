@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="mt-5 d-flex align-content-center justify-content-between w-100">
+    <div class="inputs">
+      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Search">
+    </div>
+
+    <div class="add">
+      <button type="button" class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#addModal">
+        Add
+      </button>
+    </div>
+  </div>
+
+  <div class="dataShow mt-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Label</th>
+          <th>URL</th>
+          <th>Created On</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of meiliData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.label }}</td>
+          <td>{{ item.url }}</td>
+          <td>{{ item.createdOn | date: 'yyyy-MM-dd' }}</td>
+          <td>
+            <button class="btn" (click)="editSource(item.id)"  data-bs-toggle="modal" data-bs-target="#editmodel">
+              <i class="fa-solid fa-pen-to-square mx-5"></i>
+            </button>
+            <button class="btn" (click)="deleteMeili(item.id)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPagesArray">
+          <button class="page-link" (click)="changePage(page)" [class.active]="currentPage === page">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Modal for Adding -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Add Source</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addSource(sourceForm)" [formGroup]="sourceForm">
+          <div class="mb-3">
+            <label for="label" class="col-form-label">Label</label>
+            <input type="text" class="form-control" formControlName="label" placeholder="Enter label" id="label">
+          </div>
+          <div class="mb-3">
+            <label for="url" class="col-form-label">URL</label>
+            <input type="text" class="form-control" formControlName="url" placeholder="Enter URL" id="url">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add Source</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Editing -->
+
+
+<div class="modal fade" id="editmodel" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Edit MeiliSearch</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateSource()" [formGroup]="editsource">
+          <div class="mb-3">
+            <label for="label" class="col-form-label">Label</label>
+            <input type="text" class="form-control" formControlName="label" placeholder="Enter label" id="label">
+          </div>
+          <div class="mb-3">
+            <label for="url" class="col-form-label">URL</label>
+            <input type="text" class="form-control" formControlName="url" placeholder="Enter URL" id="url">
+          </div>
+   
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update Meili</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

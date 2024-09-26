@@ -1,0 +1,37 @@
+<div class="navigation">
+
+    <a href="#" class="logo">
+        <img src="logo.png" alt="" class="w-25">
+       </a>
+    <ul>
+      <li>
+        <a [routerLink]="['/meilisearch']"  routerLinkActive="hovered">
+          <span class="icon"><i class="fas fa-tachometer-alt"></i></span> <!-- Dashboard icon -->
+          <span class="title">Meilisearch</span>
+        </a>
+      </li>
+  
+      <li>
+        <a [routerLink]="['/sync']" routerLinkActive="hovered">
+          <span class="icon"><i class="fas fa-users"></i></span> <!-- Customers icon -->
+          <span class="title">Asyn</span>
+        </a>
+      </li>
+  
+      <li>
+        <a [routerLink]="['/source']" routerLinkActive="hovered" >
+          <span class="icon"><i class="fas fa-envelope"></i></span> <!-- Messages icon -->
+          <span class="title">Source</span>
+        </a>
+      </li>
+
+  
+      <li>
+        <a [routerLink]="['/meilisearch']" routerLinkActive="hovered">
+          <span class="icon"><i class="fas fa-sign-out-alt"></i></span> <!-- Sign out icon -->
+          <span class="title">Sign Out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
