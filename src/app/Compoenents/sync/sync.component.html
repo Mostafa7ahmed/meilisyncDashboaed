@@ -5,7 +5,7 @@
         </div>
 
         <div class="add">
-            <button type="button" class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="callGet()">
                 Add
             </button>
         </div>
@@ -62,34 +62,46 @@
 <!-- Modal for Adding -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add MeiliSearch</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="label" class="col-form-label">Label</label>
-                        <input type="text" class="form-control" formControlName="label" placeholder="Enter label" id="label">
-                    </div>
-                    <div class="mb-3">
-                        <label for="url" class="col-form-label">URL</label>
-                        <input type="text" class="form-control" formControlName="url" placeholder="Enter URL" id="url">
-                    </div>
-                    <div class="mb-3">
-                        <label for="apiKey" class="col-form-label">API Key</label>
-                        <input type="text" class="form-control" formControlName="apiKey" placeholder="Enter API Key" id="apiKey">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Meili</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add MeiliSearch</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <form [formGroup]="syncForm" (ngSubmit)="addMeili()">
+            <div class="mb-3">
+              <label for="label" class="col-form-label">Label</label>
+              <input type="text" class="form-control" formControlName="label" placeholder="Enter label" id="label">
+            </div>
+  
+            <!-- MeiliSearch Dropdown -->
+            <div class="form-group my-5">
+              <label for="meiliSearchDropdown">Select MeiliSearch</label>
+              <select class="form-control" formControlName="meiliSearchId" id="meiliSearchDropdown">
+                <option value="">Select a MeiliSearch</option>
+                <option *ngFor="let meiliSearch of meiliData" [value]="meiliSearch.id">{{ meiliSearch.label }}</option>
+              </select>
+            </div>
+  
+            <!-- Source Dropdown -->
+            <div class="form-group">
+              <label for="sourceDropdown">Select Source</label>
+              <select class="form-control" formControlName="sourceId" id="sourceDropdown">
+                <option value="">Select a Source</option>
+                <option *ngFor="let source of sourceData" [value]="source.id">{{ source.label }}</option>
+              </select>
+            </div>
+  
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add Meili</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  
 
 <!-- Modal for Editing -->
 <!-- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
