@@ -18,24 +18,23 @@ export class MeilisearchComponent implements OnInit {
   totalPages = 1;
   totalPagesArray: number[] = [];
   pageSize = 10;
-  editmelie: FormGroup;
-  meilForm: FormGroup;
+  meilForm = new FormGroup({
+    label: new FormControl(null, Validators.required),
+    url: new FormControl(null, Validators.required),
+    apiKey: new FormControl(null, Validators.required),
+  });
 
+  editmelie = new FormGroup({
+    id: new FormControl(''),
+    label: new FormControl('', Validators.required),
+    url: new FormControl('', Validators.required),
+    apiKey: new FormControl('', Validators.required),
+  });
 
   constructor(private _MeilisearchService: MeilisearchService) {
-    this.meilForm = new FormGroup({
-      label: new FormControl(null, Validators.required),
-      url: new FormControl(null, Validators.required),
-      apiKey: new FormControl(null, Validators.required),
-    });
+
 
     // Initialize editmelie with an empty FormGroup
-    this.editmelie = new FormGroup({
-      id: new FormControl(''),
-      label: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
-      apiKey: new FormControl('', Validators.required),
-    });
   }
 
   ngOnInit(): void {
@@ -81,6 +80,7 @@ export class MeilisearchComponent implements OnInit {
       this._MeilisearchService.updateMelie(this.editmelie.value).subscribe({
         next: (res) => {
           this.getData(this.currentPage); // Refresh data
+          this.closeModal('#exampleModal2'); // Close modal on success
         },
         error: (err) => {
           console.error('Error updating item:', err);
@@ -95,7 +95,7 @@ export class MeilisearchComponent implements OnInit {
       this._MeilisearchService.addMeile(data.value).subscribe({
         next: (res) => {
           console.log('Success:', res);
-          this.closeModal(); // Close modal on success
+          this.closeModal('#exampleModal'); // Close modal on success
           this.getData(this.currentPage); // Refresh the data after adding new entry
           data.reset(); // Reset form
         },
@@ -127,8 +127,8 @@ export class MeilisearchComponent implements OnInit {
   }
 
   // Close the modal
-  closeModal() {
-    const modalElement = document.querySelector('#exampleModal');
+  closeModal(idModel:string) {
+    const modalElement = document.querySelector(idModel);
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 
