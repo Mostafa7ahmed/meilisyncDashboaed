@@ -37,10 +37,6 @@ export class MeilisearchComponent implements OnInit {
     // Initialize editmelie with an empty FormGroup
   }
 
-  ngOnInit(): void {
-    this.getData(this.currentPage);
-  }
-
   // Fetch paginated data
   getData(pageNumber: number = 1) {
     this._MeilisearchService.getAll(pageNumber, this.pageSize).subscribe({
@@ -133,4 +129,13 @@ export class MeilisearchComponent implements OnInit {
     modal.hide();
 
   }
+
+
+
+
+  
+  ngOnInit(): void {
+    this.getData(this.currentPage);
+  }
+
 }
